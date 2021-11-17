@@ -5,6 +5,7 @@ import requests
 from bs4 import BeautifulSoup
 from tqdm.auto import tqdm
 import json 
+import pandas as pd 
 
 
 class NovelUrlCrawler():
@@ -49,10 +50,12 @@ class NovelUrlCrawler():
 
 if __name__ == '__main__':
     crawler = NovelUrlCrawler()
-    result = crawler.get_archives(debug=False)
-    json_result = crawler.json_converter(result,"novel_url_test")
-    print ('end')
-
+    result = crawler.get_archives(debug=False) #1m50s 
+    # json_result = crawler.json_converter(result,"novel_url_test")
+    # print ('end')
+    result_excel = pd.DataFrame(result)
+    result_excel.to_excel('data/final_result.xlsx')
+    
 
    
 
