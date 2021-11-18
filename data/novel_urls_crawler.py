@@ -1,11 +1,13 @@
 # 소설 본문 URL 크롤링
+import sys
 
+from insert_mongo import insert_mongo
+sys.path.append("C:/Users/Jimin/PycharmProjects/graduation")
 import datetime as dt
 import requests
 from bs4 import BeautifulSoup
 from tqdm.auto import tqdm
 import json 
-import pandas as pd 
 
 
 class NovelUrlCrawler():
@@ -32,12 +34,13 @@ class NovelUrlCrawler():
                 result.append(elements)
 
                 # novel_contents_prac.json 파일에서 생성된 corpus 파일을 열어서 corpus의 길이를 추가 
-                # with open("C:\Users\Jimin\PycharmProjects\graduation\novel/novel_contents_prac.json",encoding="utf-8") as file:
-                #     file = json.load(file)
-                #         # for novel in range(len(file)):
-                #     elements['length_of sentences'] = len(file[post_content.index(i)]['corpus'])
-                    
-                # result.append(elements)
+                with open("C:/Users/Jimin/PycharmProjects/graduation/novel/novel_contents.json","r",encoding="utf-8") as file:
+                    file = json.load(file)
+                
+                for i in range(len(file)):
+                    elements['length_of sentences'] = len(file[post_contents.index(i)]['corpus'])
+                # insert_mongo("meta",elements)
+                result.append(elements)
         return result
 
 
@@ -53,9 +56,7 @@ if __name__ == '__main__':
     result = crawler.get_archives(debug=False) #1m50s 
     # json_result = crawler.json_converter(result,"novel_url_test")
     # print ('end')
-    result_excel = pd.DataFrame(result)
-    result_excel.to_excel('data/final_result.xlsx')
-    
+
 
    
 
