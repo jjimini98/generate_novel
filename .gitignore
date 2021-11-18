@@ -22,3 +22,4 @@ events.out.*
 *.hwp
 *.PDF
 *.xlsx
+data/spm/
