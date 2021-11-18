@@ -1,5 +1,7 @@
 import sys
-sys.path.append("C:/Users/Jimin/PycharmProjects/graduation")
+pathList = ["C:/Users/Jimin/PycharmProjects/graduation","C:/Users/Jimin/PycharmProjects/graduation/data"] 
+for p in pathList : 
+    sys.path.append(p)
 import json
 from tqdm.auto import tqdm
 import requests 
@@ -119,7 +121,7 @@ class NovelContentsCrawler():
         
 
     def convert_json(self, result,file_name): 
-        with open(f'C:/Users/Jimin/PycharmProjects/graduation/data\{file_name}.json', 'w', encoding="UTF-8") as f:
+        with open(f'C:/Users/Jimin/PycharmProjects/graduation/data/{file_name}.json', 'w', encoding="UTF-8") as f:
             json_file = json.dump(result, f, indent=4, ensure_ascii=False)  #json 파일로 만들기 
             print("==========================Created JSON Files==========================")
         return json_file

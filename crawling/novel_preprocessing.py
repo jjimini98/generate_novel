@@ -1,5 +1,7 @@
 import sys 
-sys.path.append("C:/Users/Jimin/PycharmProjects/graduation")
+pathList = ["C:/Users/Jimin/PycharmProjects/graduation","C:/Users/Jimin/PycharmProjects/graduation/data"] 
+for p in pathList : 
+    sys.path.append(p)
 import os 
 from transformers import PreTrainedTokenizerFast
 from tqdm.auto import tqdm

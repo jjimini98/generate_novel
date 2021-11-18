@@ -1,13 +1,14 @@
 # 소설 본문 URL 크롤링
 import sys
-
-from insert_mongo import insert_mongo
-sys.path.append("C:/Users/Jimin/PycharmProjects/graduation")
+pathList = ["C:/Users/Jimin/PycharmProjects/graduation","C:/Users/Jimin/PycharmProjects/graduation/data"] 
+for p in pathList : 
+    sys.path.append(p)
 import datetime as dt
 import requests
 from bs4 import BeautifulSoup
 from tqdm.auto import tqdm
 import json 
+from insert_mongo import insert_mongo
 
 
 class NovelUrlCrawler():
