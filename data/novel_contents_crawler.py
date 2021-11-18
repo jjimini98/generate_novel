@@ -1,18 +1,19 @@
+import sys
+sys.path.append("C:/Users/Jimin/PycharmProjects/graduation")
 import json
 from tqdm.auto import tqdm
 import requests 
-import re
-import pymongo 
 import time 
 from bs4 import BeautifulSoup
-
+from insert_mongo import insert_mongo
 class NovelContentsCrawler():
 
     #novel_url.json에서 url링크 가져옴 
     def get_data(self,debug=False):
         with open("C:/Users/Jimin/PycharmProjects/graduation/data/novel_url.json", 'r',encoding='utf-8') as f:
             data = json.load(f)
-        if debug: data = data[0:1]
+        if debug: data = data[197:198]
+
         urls = [i.get('bookmarks') for i in data] 
         return urls 
 
@@ -42,9 +43,11 @@ class NovelContentsCrawler():
 
             url_contents = requests.get(url).text
             contents = BeautifulSoup(url_contents, 'html.parser')
-            title =  contents.select_one('h1.entry-title').text
-            novel_dict['title'] = title 
-
+            try:
+                title =  contents.select_one('h1.entry-title').text
+                novel_dict['title'] = title 
+            except AttributeError:  # 해당 글이 없는 경우 
+                continue
             p_tags = contents.select('div.entry-content > p')
 
             if len(p_tags) == 1:
@@ -107,20 +110,18 @@ class NovelContentsCrawler():
 
             novel_dict['quotation_mark'] = quotation_mark_list
             novel_dict['dialogic_style'] = dialogic_style_list
+
+            # insert_mongo("contents",novel_dict)
             novels.append(novel_dict)
             
-     
-            # # mongoDB에 소설 데이터 추가하기 
-            # # mongo = MongoDB(host="office.leevi.co.kr", port=40005, id ="leevi", password = "qlenfrl999", database="whowant" )
-            # # mongo.insert ("test", novel_dict, database="whowant")
-            #여기까지 
+
         return novels
         
 
     def convert_json(self, result,file_name): 
-        with open(f'/home/jimin/workspace/voucher/whowant/{file_name}.json', 'w', encoding="UTF-8") as f:
+        with open(f'C:/Users/Jimin/PycharmProjects/graduation/data\{file_name}.json', 'w', encoding="UTF-8") as f:
             json_file = json.dump(result, f, indent=4, ensure_ascii=False)  #json 파일로 만들기 
-            
+            print("==========================Created JSON Files==========================")
         return json_file
 
     def get_utterance(self, input_novels,debug=False,get_json_dump=False):
@@ -147,7 +148,7 @@ class NovelContentsCrawler():
                         dialogic_style_list.append((index,sen))
 
                 elif "다. " not in sen:
-                    print(sen)
+                    # print(sen)
                     if sen in paragraphs:
                         dialogic_style_list.append((index,sen))
 
@@ -162,7 +163,6 @@ class NovelContentsCrawler():
 # 클래스 실행부분 
 if __name__ == '__main__':
     crawler = NovelContentsCrawler()
-    crawl_result = crawler.crawl_novel(debug=True) 
-    # result = crawler.convert_json(crawl_result,"novel_662")
-            
+    crawl_result = crawler.crawl_novel(debug=False) 
+    result = crawler.convert_json(crawl_result,"novel_contents_test")  #664개 크롤링 시 16분 소요 
     print("end")
