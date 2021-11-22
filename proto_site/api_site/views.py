@@ -5,11 +5,11 @@ from transformers import PreTrainedTokenizerFast , pipeline
 import os , time
 # from leevi_common.util.sentence_util import split_sentences
 from concurrent.futures import ThreadPoolExecutor
-
+os.chdir("../")
 # Create your views here.
 
 # 모델의 경로 및 이름 지정 
-path = "C:/Users/Jimin/PycharmProjects/graduation/gpt_models/"
+path = "/root/graduation/gpt_models/"
 model_name_or_path = os.path.join(path, "kogpt2-contents/") 
 
 config =os.path.join( model_name_or_path, "config.json") 

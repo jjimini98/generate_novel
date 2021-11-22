@@ -1,6 +1,6 @@
 import sys,os
 
-proto_path  = "C:/Users/Jimin/PycharmProjects/graduation/proto_site"
+proto_path  = "/root/graduation/proto_site"
 path_list = [proto_path]
 # os.environ["CUDA_VISIBLE_DEVICES"] = '0'
 
