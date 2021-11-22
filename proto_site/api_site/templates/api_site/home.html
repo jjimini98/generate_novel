@@ -1,0 +1,28 @@
+<!-- home.html --> 
+<!doctype html> 
+<meta charset = 'utf-8'>
+<html lang="ko">
+   <head> 
+      <title>Generate Novel</title>
+      <style type="text/css">
+         body{ text-align: center; }
+      </style>
+   </head>
+   <body>
+     <h1>Generate Novel</h1>
+     
+     <form action = "/api_stie/get_result" method = "GET">
+                    
+       <textarea  name = 'keyword' , tag = 'input_value' cols="20" rows="1" placeholder="keyword", style="resize: none;"></textarea><br><br>
+       <textarea  name = 'total_num' , tag = 'total_num' cols="20" rows="1" placeholder="total_num", style="resize: none;">3</textarea><br><br>
+       <textarea  name = 'max_sentence' , tag = 'max_sentence' cols="20" rows="1" placeholder="max_sentence", style="resize: none;">2</textarea><br><br>
+            <input type = "submit" value = "GET!" /><br>
+      </form>
+   {% if data %}
+   {% for da in data%}
+   <div>{{ da }}</div>
+   {% endfor %}
+   {% endif %}
+
+   
+</html>
