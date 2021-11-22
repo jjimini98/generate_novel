@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.views.generic import View
-from transformers import PreTrainedTokenizerFast , pipeline
+from transformers import PreTrainedTokenizerFast , pipeline 
 import os , time
+import torch
 # from leevi_common.util.sentence_util import split_sentences
 from concurrent.futures import ThreadPoolExecutor
 
@@ -10,12 +11,16 @@ from concurrent.futures import ThreadPoolExecutor
 
 # 모델의 경로 및 이름 지정 
 path = "/root/graduation/gpt_models"
-model_name_or_path = os.path.join(path, "kogpt2-contents/checkpoint-140000") 
+model_name_or_path = os.path.join(path, "kogpt2-dialog/checkpoint-140000") 
+# model_name_or_path = os.path.join(path, "skt/kogpt-base-v2") 
+
 
 config =os.path.join( model_name_or_path, "config.json") 
 tokenizer = PreTrainedTokenizerFast.from_pretrained("skt/kogpt2-base-v2",bos_token='</s>', eos_token='</s>', unk_token='<unk>', pad_token='<pad>', mask_token='<mask>')
 
-model = pipeline('text-generation',model=os.path.join(path,model_name_or_path), tokenizer=tokenizer,config=config,device=0)
+model = pipeline('text-generation',model=os.path.join(path,model_name_or_path), tokenizer=tokenizer,config=config)
+# model = pipeline('text-generation',model=os.path.join(path,model_name_or_path), tokenizer=tokenizer,device=-1)
+
 
 #클래스 뷰로 GET 방식 처리 
 class ThreadResource(object):
@@ -59,7 +64,7 @@ class ThreadResource(object):
                 self.result_list.append(result)
 
             # 반복(while)의 횟수가 10번이거나 결과의 총 길이가 5보다 크거나 같아질때 
-            if count == 10 or self.len_result()>=5: 
+            if count == 5 or self.len_result()>=5: 
                 if debug: 
                     print("total in Th seconds : ", time.time()-start)
                 self.flag = False
@@ -90,6 +95,6 @@ class HtmlView(View):
         result_list.insert(0,{'keyword':keyword})
         thread_resource.__init__()
 
-        return render(request,"models/home.html",{"data":result_list}) 
+        return render(request,"api_site/home.html",{"data":result_list}) 
 
 #TODO 1) 키워드없이 문장이 생성되는 기능 추가  2) 단어 추천 
