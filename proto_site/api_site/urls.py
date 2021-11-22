@@ -3,5 +3,5 @@ from api_site.views import HtmlView
 
 
 urlpatterns = [
-    path('get_result/', HtmlView.as_view(), name='html_view'),
+    path('', HtmlView.as_view(), name='html_view'),
 ]
