@@ -24,3 +24,4 @@ events.out.*
 *.xlsx
 data/spm/
 sentence_similarity
+proto_site/proto/
