@@ -9,13 +9,13 @@ from concurrent.futures import ThreadPoolExecutor
 # Create your views here.
 
 # 모델의 경로 및 이름 지정 
-path = "/root/graduation/gpt_models"
-model_name_or_path = os.path.join(path, "kogpt2-contents/checkpoint-140000") 
+path = "C:/Users/Jimin/PycharmProjects/graduation/gpt_models/"
+model_name_or_path = os.path.join(path, "kogpt2-contents/") 
 
 config =os.path.join( model_name_or_path, "config.json") 
 tokenizer = PreTrainedTokenizerFast.from_pretrained("skt/kogpt2-base-v2",bos_token='</s>', eos_token='</s>', unk_token='<unk>', pad_token='<pad>', mask_token='<mask>')
 
-model = pipeline('text-generation',model=os.path.join(path,model_name_or_path), tokenizer=tokenizer,config=config,device=0)
+model = pipeline('text-generation',model=os.path.join(path,model_name_or_path), tokenizer=tokenizer,config=config)
 
 #클래스 뷰로 GET 방식 처리 
 class ThreadResource(object):
@@ -90,6 +90,6 @@ class HtmlView(View):
         result_list.insert(0,{'keyword':keyword})
         thread_resource.__init__()
 
-        return render(request,"models/home.html",{"data":result_list}) 
+        return render(request,"api_site/home.html",{"data":result_list}) 
 
 #TODO 1) 키워드없이 문장이 생성되는 기능 추가  2) 단어 추천 
