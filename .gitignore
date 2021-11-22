@@ -23,3 +23,4 @@ events.out.*
 *.PDF
 *.xlsx
 data/spm/
+sentence_similarity
