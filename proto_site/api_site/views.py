@@ -4,7 +4,6 @@ from django.views.generic import View
 from transformers import PreTrainedTokenizerFast , pipeline 
 import os , time
 import torch
-# from leevi_common.util.sentence_util import split_sentences
 from concurrent.futures import ThreadPoolExecutor
 
 # Create your views here.
