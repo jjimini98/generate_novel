@@ -181,7 +181,7 @@ if __name__ == "__main__":
     # train_save 모델로 generate 
     # start = time.time() 
     chef = load_model(model_name="kogpt2-contents")
-    generate_novel(chef, input_keyword = "겨울 아침 출근길", debug=True)  #max_length = 30 이면 9.4초 
+    generate_novel(chef, input_keyword = "초콜릿", debug=True)  #max_length = 30 이면 9.4초 
     # print("소요시간 >> " , time.time()-start) 
 
     # for _ in range(5):
