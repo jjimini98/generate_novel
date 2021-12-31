@@ -175,13 +175,13 @@ if __name__ == "__main__":
     # gptmodel.train_save_model(output_dir_name = "kogpt2-contents" , debug=True)
 
     # base 모델로 generate 
-    chef = load_model(model_name="skt/kogpt2-base-v2")
-    generate_novel(model=chef, debug=True)
-
+    # chef = load_model(model_name="skt/kogpt2-base-v2")
+    # generate_novel(model=chef, debug=True)
+    keyword = input("input keyword >> ") 
     # train_save 모델로 generate 
     # start = time.time() 
     chef = load_model(model_name="kogpt2-contents")
-    generate_novel(chef, input_keyword = "초콜릿", debug=True)  #max_length = 30 이면 9.4초 
+    generate_novel(chef, input_keyword = keyword, debug=True)  #max_length = 30 이면 9.4초 
     # print("소요시간 >> " , time.time()-start) 
 
     # for _ in range(5):
