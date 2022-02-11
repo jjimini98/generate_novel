@@ -141,7 +141,7 @@ if __name__ == "__main__":
     device = 'cuda'
     gptmodel = gpt_only_dialog(device)
     
-    mongo = MongoDB(host = "office.leevi.co.kr", port = 35005, id = "leevi", password = "qlenfrl999", database = "whowant" )
+    mongo = mongoDB() #코드 수정 필요 
     all_data = mongo.find("test" , {})
 
     result = gptmodel.get_contents(all_data , debug = False)
