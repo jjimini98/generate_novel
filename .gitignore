@@ -24,3 +24,5 @@ events.out.*
 *.xlsx
 data/spm/
 sentence_similarity
+.gitignore
+.env
